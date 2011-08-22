@@ -1,4 +1,6 @@
-This is a PHP database framework for use with MySQL databases. It takes advantage of the MySQLi extension and makes queries, prepared statements, and fetching data a whole lot easier.
+A PHP database framework for use with MySQL databases.
+
+The purpose of this project is to take advantage of the MySQLi extension and makes queries, prepared statements, and fetching data a whole lot easier.
 
 Here's an example:
 
