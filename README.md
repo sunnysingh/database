@@ -1,6 +1,6 @@
 A PHP database framework for use with MySQL databases.
 
-The purpose of this project is to take advantage of the MySQLi extension and makes queries, prepared statements, and fetching data a whole lot easier.
+The purpose of this project is to take advantage of the MySQLi extension and make queries, prepared statements, and data fetching a whole lot easier.
 
 Here's an example:
 
