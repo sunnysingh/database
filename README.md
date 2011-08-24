@@ -18,7 +18,7 @@ $insert = $db->query("INSERT INTO users (firstname, lastname) VALUES(?, ?)", arr
 if ($insert !== false) {
 
  // Built-in methods such as fetch_row make retrieving data as simple as...
- $user = $db->fetch_row("SELECT firstname, lastname FROM users WHERE lastname = 'brown'");
+ $user = $db->fetch_row("SELECT firstname, lastname FROM users WHERE lastname = 'Brown'");
 
  echo $user->firstname;
  echo $user->lastname;
