@@ -1,4 +1,4 @@
-Database is a PHP framework for easy database interaction with MySQL.
+Database is a PHP framework for database interaction with MySQL.
 
 The purpose of this framework is to take advantage of the MySQLi extension and make queries, prepared statements, and data fetching a whole lot easier.
 
