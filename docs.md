@@ -1,4 +1,4 @@
-# Setting Up a Connection
+## Setting Up a Connection
 
 For every database that you want to connect to, you will do it like so:
 
@@ -36,7 +36,7 @@ echo $age;
 ?>
 ```
 
-Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the second argument.
+Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the second $params argument.
 
 ```php
 <?php
@@ -60,6 +60,127 @@ echo $age;
 ?>
 ```
 
+## Database::fetch_row($query, $object, $params)
+
+Fetches fields from a single row and returns them as in object or array.
+
+
+```php
+<?php
+
+$person = $db->fetch_row("SELECT name, age FROM people LIMIT 1");
+
+echo $person->name;
+echo $person->age;
+
+?>
+```
+
+The second $object argument can be set to false to return an array instead.
+
+```php
+<?php
+
+$person = $db->fetch_row("SELECT name, age FROM people LIMIT 1", false);
+
+echo $person["name"];
+echo $person["age"];
+
+?>
+```
+
+Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the third $params argument.
+
+```php
+<?php
+
+// the WRONG way
+
+$age = $_GET["age"];
+$age2 = $_GET["age2"];
+
+$person = $db->fetch_row("SELECT name, age FROM people WHERE age = '$age' OR age = '$age2' LIMIT 1");
+
+echo $person->name;
+echo $person->age;
+
+// the RIGHT way
+
+$age = $_GET["age"];
+$age2 = $_GET["age2"];
+
+$person = $db->fetch_row("SELECT name, age FROM people WHERE age = ? OR age = ? LIMIT 1", true, array($age, $age2));
+
+echo $person->name;
+echo $person->age;
+
+?>
+```
+
+## Database::fetch_rows($query, $object, $params)
+
+Fetches fields from multiple rows and returns them as objects or arrays contained one array.
+
+
+```php
+<?php
+
+$people = $db->fetch_rows("SELECT name, age FROM people");
+
+foreach ($people as $person) {
+ echo $person->name;
+ echo $person->age;
+}
+
+?>
+```
+
+The second $object argument can be set to false to return each row as an array instead.
+
+```php
+<?php
+
+$people = $db->fetch_rows("SELECT name, age FROM people", false);
+
+foreach ($people as $person) {
+ echo $person["name"];
+ echo $person["age"];
+}
+
+?>
+```
+
+Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the third $params argument.
+
+```php
+<?php
+
+// the WRONG way
+
+$age = $_GET["age"];
+$age2 = $_GET["age2"];
+
+$people = $db->fetch_rows("SELECT name, age FROM people WHERE age = '$age' OR age = '$age2'");
+
+foreach ($people as $person) {
+ echo $person->name;
+ echo $person->age;
+}
+
+// the RIGHT way
+
+$age = $_GET["age"];
+$age2 = $_GET["age2"];
+
+$people = $db->fetch_rows("SELECT name, age FROM people WHERE age = ? OR age = ?", true, array($age, $age2));
+
+foreach ($people as $person) {
+ echo $person->name;
+ echo $person->age;
+}
+
+?>
+```
 
 
 
