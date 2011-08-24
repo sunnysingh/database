@@ -22,6 +22,46 @@ $db = new Database($name, $host, $username, $password, $charset, $debug, $errorm
 
 Note: <code>$db</code> will be used throughout these docs in example code, but you are in no way limited to what you can name your database variable.
 
+## Database::query($query, $params)
+
+Executes a query and returns:
+
+<ul>
+ <li>The number of affected rows, if the number is greater than one and if no errors with the query occurred.</li>
+ <li>True, if the number of affected rows is zero and if no errors with the query occurred.</li>
+ <li>False, if errors with the query occurred.</li>
+</ul>
+
+You would typically use this method for an INSERT, UPDATE, DELETE, or similar queries.
+
+```php
+<?php
+
+$insert = $db->query("INSERT INTO people (name, age) VALUES('Bob', '123')");
+
+if ($insert !== false) {
+
+ // insert was successful
+ // checking that $insert is not false will guarantee that this code will run only when no errors have occurred
+
+}
+
+?>
+```
+
+Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the second $params argument.
+
+```php
+<?php
+
+$name = $_GET["name"];
+$age = $_GET["age"];
+
+$insert = $db->query("INSERT INTO people (name, age) VALUES(?, ?)", array($name, $age));
+
+?>
+```
+
 ## Database::fetch_field($query, $params)
 
 Fetches a single field and returns it by itself (not in an object or array).
@@ -62,7 +102,7 @@ echo $age;
 
 ## Database::fetch_row($query, $object, $params)
 
-Fetches fields from a single row and returns them as in object or array.
+Fetches fields from a single row and returns them as an object or array.
 
 
 ```php
