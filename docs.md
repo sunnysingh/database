@@ -69,9 +69,9 @@ Fetches a single field and returns it by itself (not in an object or array).
 ```php
 <?php
 
-$age = $db->fetch_field("SELECT age FROM people WHERE name = 'bob' LIMIT 1");
+$name = $db->fetch_field("SELECT name FROM people WHERE age = '123' LIMIT 1");
 
-echo $age;
+echo $name;
 
 ?>
 ```
@@ -83,19 +83,19 @@ Any sensitive variables in the query must be replaced with ? (question marks, a.
 
 // the WRONG way
 
-$name = $_GET["name"];
+$age = $_GET["age"];
 
-$age = $db->fetch_field("SELECT age FROM people WHERE name = '$name' LIMIT 1");
+$name = $db->fetch_field("SELECT name FROM people WHERE age = '$age' LIMIT 1");
 
-echo $age;
+echo $name;
 
 // the RIGHT way
 
-$name = $_GET["name"];
+$age = $_GET["age"];
 
-$age = $db->fetch_field("SELECT age FROM people WHERE name = ? LIMIT 1", array($name));
+$name = $db->fetch_field("SELECT name FROM people WHERE age = ? LIMIT 1", array($age));
 
-echo $age;
+echo $name;
 
 ?>
 ```
