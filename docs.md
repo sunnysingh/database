@@ -245,8 +245,8 @@ $db->add_filter("query", function($query) {
 
  return str_replace(
  
-  array("accounts", "music"),
-  array("bob_accounts", "bob_music"),
+  array("accounts.", "music."),
+  array("bob_accounts.", "bob_music."),
 
  $query);
 
