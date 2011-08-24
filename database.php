@@ -16,7 +16,7 @@ class Database {
  private $debug, $stmt, $result, $filters = array();
 
  // Sets up database connection
- public function __construct($name, $server, $username, $password, $charset = "utf8", $debug = false, $errormsg = "Database connection failed.") {
+ public function __construct($name, $server, $username, $password, $charset = "utf8", $debug = true, $errormsg = "Database connection failed.") {
   if ($this->debug) { mysqli_report(MYSQLI_REPORT_ERROR); }
   else { mysqli_report(MYSQLI_REPORT_OFF); }
   $this->connection = @new mysqli($server, $username, $password, $name);
