@@ -88,7 +88,17 @@ class Database {
     array_unshift($params_bindable_withref, $markers);
     call_user_func_array(array($this->stmt, "bind_param"), $params_bindable_withref);
    }
-   $this->stmt->execute();
+   $execute = $this->stmt->execute();
+   // An extra check to see if the query executed without errors (first check is when we first prepare the query)
+   if (!$execute) {
+	$debug_backtrace = debug_backtrace();
+	error_log("MySQL database error:  ".$this->stmt->error." for query ".$query." in ".$debug_backtrace[1]["file"]." on line ".$debug_backtrace[1]["line"]);
+    if ($this->debug) {
+     echo "MySQL database error: ".$this->stmt->error." for query <pre><code>".$query."</code></pre> in ".$debug_backtrace[1]["file"]." on line ".$debug_backtrace[1]["line"];
+     exit();
+	}
+	return false;
+   }
    if ($this->stmt->field_count) {
     $fields = $this->stmt->result_metadata()->fetch_fields();
     foreach ($fields as $key => $field) {
