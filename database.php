@@ -1,13 +1,12 @@
 <?php
 
-/*
-
-MySQL Database Framework for MySQLi
-
-Author: Sunny Singh (http://sunnyis.me)
-Project Page: http://github.com/sunnysingh/database
-
-*/
+/**
+ * MySQL Database Framework for MySQLi
+ *
+ * Version: 1.0.1 (June 11, 2012)
+ * Author: Sunny Singh (http://sunnyis.me)
+ * Project Page: http://github.com/sunnysingh/database
+ */
 
 class Database {
 
