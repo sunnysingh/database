@@ -18,7 +18,7 @@ $db = new Database($name, $hostname, $username, $password, $charset, $debug, $er
 * `$password` (string): MySQL password.
 * `$charset` (string): MySQL charset. Default set to "utf8."
 * `$debug` (boolean): Turn debug mode on or off. If set to true, error messages will be shown. Errors are logged regardless. Default set to true.
-* If `$debug` is set to false, this message will be shown when there is a connection error. Default set to "Database connection failed."
+* `$errormsg` (string): If `$debug` is set to false, this message will be shown when there is a connection error. Default set to "Database connection failed."
 
 **Note**: The `$db` variable will be used throughout code snippets, but you are in no way limited to what you can name your database variable(s).
 
