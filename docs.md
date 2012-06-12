@@ -1,6 +1,6 @@
 # Documentation
 
-This is where you will learn the ins and outs of this framework.
+Learn how to <del>fly</del> <ins>use the framework</ins>.
 
 ## Setting Up a Connection
 
@@ -9,39 +9,37 @@ For every database that you want to connect to, you will set it up like so.
 ```php
 <?php
 
-$db = new Database($name, $host, $username, $password, $charset, $debug, $errormsg);
+$db = new Database($name, $hostname, $username, $password, $charset, $debug, $errormsg);
 
 ?>
 ```
 
-* $name (string): Database name you're connecting to
-* $host (string): MySQL server host (usually "localhost")
-* $username (string): MySQL username
-* $password (string): MySQL password
-* $charset (string): MySQL charset. Default set to "utf8"
-* $debug (boolean): Turn debug mode on or off. If set to true, error messages will be shown. Errors are logged regardless. Default set to true
-* If $debug is set to false, this message will be shown when there is a connection error. Default set to "Database connection failed."
+* `$name` (string): Database name you're connecting to.
+* `$hostname` (string): MySQL server hostname (usually "localhost").
+* `$username` (string): MySQL username.
+* `$password` (string): MySQL password.
+* `$charset` (string): MySQL charset. Default set to "utf8."
+* `$debug` (boolean): Turn debug mode on or off. If set to true, error messages will be shown. Errors are logged regardless. Default set to true.
+* If `$debug` is set to false, this message will be shown when there is a connection error. Default set to "Database connection failed."
 
-Note: <code>$db</code> will be used throughout these docs in example code, but you are in no way limited to what you can name your database variable.
+**Note**: The `$db` variable will be used throughout code snippets, but you are in no way limited to what you can name your database variable(s).
 
 ```php
 <?php
 
-// example of two basic database connections
+// Example of two basic database connections
 
-$accounts_database = new Database("accounts", "localhost", "fluffy", "s3kr!t");
-$music_database = new Database("music", "localhost", "fluffy", "s3kr!t");
-
-?>
+$accounts_database = new Database("accounts", "localhost", "root", "");
+$music_database = new Database("music", "localhost", "root", "");
 ```
 
 ## Database::query($query, $params)
 
 Executes a query and returns:
 
-* The number of affected rows, if the number is greater than one and if the query contains <strong>no</strong> errors.
-* True, if the number of affected rows is zero and if the query contains <strong>no</strong> errors.
-* False, if the query contains errors.
+* The number of affected rows if the number is greater than one and if the query contains **no** errors.
+* True if the number of affected rows is zero and if the query contains **no** errors.
+* False if the query contains errors.
 
 You would typically use this method for an INSERT, UPDATE, DELETE, or similar query.
 
@@ -50,14 +48,12 @@ You would typically use this method for an INSERT, UPDATE, DELETE, or similar qu
 
 $insert = $db->query("INSERT INTO people (name, age) VALUES('Bob', '123')");
 
-if ($insert !== false) {
+if ($insert) {
 
- // insert was successful
- // checking that $insert is not false will guarantee that this code will run only when no errors have occurred
+ // Insert was successful
+ // You can also explicitly check if $insert returned true or false, but a simple check like this is usually enough
 
 }
-
-?>
 ```
 
 Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the second $params argument.
@@ -69,8 +65,6 @@ $name = $_GET["name"];
 $age = $_GET["age"];
 
 $insert = $db->query("INSERT INTO people (name, age) VALUES(?, ?)", array($name, $age));
-
-?>
 ```
 
 ## Database::fetch_field($query, $params)
@@ -83,8 +77,6 @@ Fetches a single field and returns it by itself (not in an object or array).
 $name = $db->fetch_field("SELECT name FROM people WHERE age = '123' LIMIT 1");
 
 echo $name;
-
-?>
 ```
 
 Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the second $params argument.
@@ -107,8 +99,6 @@ $age = $_GET["age"];
 $name = $db->fetch_field("SELECT name FROM people WHERE age = ? LIMIT 1", array($age));
 
 echo $name;
-
-?>
 ```
 
 ## Database::fetch_row($query, $object, $params)
@@ -123,8 +113,6 @@ $person = $db->fetch_row("SELECT name, age FROM people LIMIT 1");
 
 echo $person->name;
 echo $person->age;
-
-?>
 ```
 
 The second $object argument can be set to false to return an array instead.
@@ -136,8 +124,6 @@ $person = $db->fetch_row("SELECT name, age FROM people LIMIT 1", false);
 
 echo $person["name"];
 echo $person["age"];
-
-?>
 ```
 
 Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the third $params argument.
@@ -164,8 +150,6 @@ $person = $db->fetch_row("SELECT name, age FROM people WHERE age = ? OR age = ? 
 
 echo $person->name;
 echo $person->age;
-
-?>
 ```
 
 ## Database::fetch_rows($query, $object, $params)
@@ -182,8 +166,6 @@ foreach ($people as $person) {
  echo $person->name;
  echo $person->age;
 }
-
-?>
 ```
 
 The second $object argument can be set to false to return each row as an array instead.
@@ -197,8 +179,6 @@ foreach ($people as $person) {
  echo $person["name"];
  echo $person["age"];
 }
-
-?>
 ```
 
 Any sensitive variables in the query must be replaced with ? (question marks, a.k.a. markers), and be given as an array in the third $params argument.
@@ -229,8 +209,6 @@ foreach ($people as $person) {
  echo $person->name;
  echo $person->age;
 }
-
-?>
 ```
 
 ## Filters
@@ -244,15 +222,13 @@ A use case for this is automatically removing database prefixes. This is particu
 $db->add_filter("query", function($query) {
 
  return str_replace(
- 
+
   array("accounts.", "music."),
   array("bob_accounts.", "bob_music."),
 
  $query);
 
 });
-
-?>
 ```
 
 This way you can write nicer looking queries like <code>SELECT music.albums</code> instead of <code>SELECT bob_music.albums</code>.
@@ -277,13 +253,13 @@ There are some public variables that allow you to retrieve important info.
 
 ## Debugging
 
-As stated under the "Setting Up a Connection" section, all errors are logged and you will see error messages in your browser if you set the $debug argument to true.
+As stated under the "Setting Up a Connection" section, all errors are logged and you will see error messages in your browser if you set the `$debug` argument to true.
 
 Extra debugging information is given when errors occur, including line numbers and the actual query that was executed.
 It is recommended to turn debug mode off on production sites so that such information is not shown to the public.
 
 ## Known Issues
 
-* You cannot do wildcard SELECT queries such as <code>SELECT * FROM...</code> due to the nature of how this framework operates. This shouldn't be a huge issue for anyone since it is good practice to list out all the columns that you want to select anyway.
-* Make sure to have the same amount of ? (markers) as parameters (the last argument in the query and fetch methods). This isn't an issue but is simply how prepared statements work.
+* You cannot do wildcard SELECT queries such as `SELECT * FROM...` due to the nature of how this framework operates. This shouldn't be a huge issue for anyone since it is good practice to list out all the columns that you want to select anyway.
+* Make sure to have the same amount of `?` (markers) as parameters (the last argument in the query and fetch methods). This isn't an issue but is simply how prepared statements work.
 * There might be a couple others that I'm either forgetting or haven't come across yet. I use this framework myself so I try to keep the number of known issues and bugs low to none. Please report any issues you come across.
