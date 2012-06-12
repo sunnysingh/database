@@ -183,7 +183,7 @@ class Database {
      foreach ($this->result as $key => $value) {
       $row[$key] = $value;
      }
-     $result_array[] = $this->result;
+     $result_array[] = $row;
     }
     $this->stmt->free_result();
     $this->stmt->close();
