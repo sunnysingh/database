@@ -111,7 +111,7 @@ class Database {
    $debug_backtrace = debug_backtrace();
    error_log("MySQL database error:  ".$this->connection->error." for query ".$query." in ".$debug_backtrace[1]["file"]." on line ".$debug_backtrace[1]["line"]);
    if ($this->debug) {
-    echo "Database error: ".$this->connection->error." for query <code>".$query."</code> in ".$debug_backtrace[1]["file"]." on line ".$debug_backtrace[1]["line"];
+    echo "Database error: ".$this->connection->error." for query <pre><code>".$query."</code></pre> in ".$debug_backtrace[1]["file"]." on line ".$debug_backtrace[1]["line"];
     exit();
    }
    return false;
