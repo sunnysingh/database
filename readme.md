@@ -31,5 +31,5 @@ if ($insert) {
 ### Version 1.0.1 (June 11, 2012)
 
 * The Database::fetch_rows() method works as expected when `$object` argument is set to false.
-* Queries in error messages are now wrapped in `&lt;pre&gt;`. This basically allows queries to be displayed with line breaks and such.
+* Queries in error messages are now wrapped in `<pre>`. This basically allows queries to be displayed with line breaks and such.
 * An extra error check has been added after the query executes. Should help with debugging certain errors.
