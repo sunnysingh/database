@@ -10,8 +10,6 @@ For every database that you want to connect to, you will set it up like so.
 <?php
 
 $db = new Database($name, $hostname, $username, $password, $charset, $debug, $errormsg);
-
-?>
 ```
 
 * `$name` (string): Database name you're connecting to.
